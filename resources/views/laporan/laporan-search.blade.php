@@ -1,14 +1,23 @@
 @extends('template.main')
 @section('content')
     <div class="section-header">
-        <h1>Status Pasien</h1>
+        <h1>Laporan Bulanan</h1>
+    </div>
+    <div>
+        <div class="card text-center">
+            <img class="card-img-top" src="holder.js/100px180/" alt="">
+            <div class="card-body">
+                <h4 class="card-title">Pendapatan Bulan {{ $data['bulan'] }} Tahun {{ $data['tahun'] }}</h4>
+                <p class="card-text">{{ $data['totalPendapatan'] }}</p>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <div class="card-header d-flex justify-content-between">
-                        <h4>Pasien Belum Selesai</h4>
+                        <h4>Pendapatan Uang Muka</h4>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-striped" id="table-1">
@@ -26,7 +35,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($proses as $item)
+                                @foreach ($data['dataAllUangMuka'] as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ \Carbon\Carbon::parse($item->slot->tanggal)->translatedFormat('d F Y') }}
@@ -53,7 +62,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="card-header d-flex justify-content-between">
-                        <h4>Pasien Sudah Selesai</h4>
+                        <h4>Pendapatan Sisa Pembayaran</h4>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-striped" id="table-2">
@@ -67,13 +76,12 @@
                                     <th>Alamat</th>
                                     <th>Jenis Treatment</th>
                                     <th>Keterangan</th>
-                                    <th>Uang Muka</th>
                                     <th>Sisa Pembayaran</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($selesai as $item)
+                                @foreach ($data['dataAllPembayaranSisa'] as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ \Carbon\Carbon::parse($item->slot->tanggal)->translatedFormat('d F Y') }}
@@ -84,9 +92,11 @@
                                         <td>{{ $item->alamat }}</td>
                                         <td>{{ $item->jenis->nama }}</td>
                                         <td>{{ $item->keterangan }}</td>
-                                        <td class="text-nowrap">{{ 'Rp ' . number_format($item->dp, 0, ',', '.') }}</td>
-                                        <td class="text-nowrap">{{ 'Rp ' . number_format($item->sisa_pembayaran, 0, ',', '.') }}</td>
-                                        <td><a class="btn btn-primary" href="/cetak/{{ $item->id }}">Cetak</a></td>
+                                        <td class="text-nowrap">
+                                            {{ 'Rp ' . number_format($item->sisa_pembayaran, 0, ',', '.') }}</td>
+                                        <td>
+                                            <div class="btn btn-primary">Cetak</div>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -96,5 +106,4 @@
             </div>
         </div>
     </div>
-
 @endsection

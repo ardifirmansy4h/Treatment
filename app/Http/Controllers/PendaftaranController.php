@@ -96,7 +96,7 @@ class PendaftaranController extends Controller
     public function destroy(string $id)
     {
         Pendaftaran::destroy($id);
-        
+
         return redirect()->route('pendaftaran.index')->with('success', 'Data berhasil dihapus');
     }
 

@@ -32,11 +32,15 @@
             </li>
 
             <li class="dropdown {{ Request::routeIs('status.index') ? 'active' : '' }}">
-                <a href="{{ route('status.index') }}" class="nav-link"><i class="fas fa-info-circle"></i><span>Status</span></a>
+                <a href="{{ route('status.index') }}" class="nav-link"><i
+                        class="fas fa-info-circle"></i><span>Status</span></a>
             </li>
-            <li class="dropdown {{ Request::routeIs('laporan.index') ? 'active' : '' }}">
-                <a href="" class="nav-link"><i class="fas fa-chart-bar"></i><span>Laporan</span></a>
+            <li
+                class="dropdown {{ Request::routeIs('laporan.index') || Request::routeIs('laporan.tes') ? 'active' : '' }}">
+                <a href="{{ route('laporan.index') }}" class="nav-link"><i
+                        class="fas fa-chart-bar"></i><span>Laporan</span></a>
             </li>
+
         </ul>
     </aside>
 </div>

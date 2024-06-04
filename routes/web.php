@@ -4,12 +4,18 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JamController;
 use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\JenisController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\SlotController;
-use App\Models\Pendaftaran;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+//Login
+
+Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 //dashboard
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 // Jam
 Route::get('/jam', [JamController::class, 'index'])->name('jam.index');
@@ -39,3 +45,10 @@ Route::get('/jenis/hapus/{id}', [JenisController::class, 'destroy'])->name('jeni
 
 //status
 Route::get('/status', [PendaftaranController::class, 'prosesStatus'])->name('status.index');
+
+// laporan
+Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+// Route::post('/laporan/search/data', [LaporanController::class, 'laporanData'])->name('laporan.search');
+Route::post('/cari', [LaporanController::class, 'laporanData'])->name('laporan.tes');
+
+Route::get('/cetak/{id}',[LaporanController::class, 'cetak'])->name('laporan.cetak');
